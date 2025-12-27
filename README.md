@@ -1,12 +1,119 @@
 # UR RTDE Program Cue Loop in Grasshopper
 ###### RTDE-based UR program cue looping in Grasshopper with Robots plugin. Features 2 workflows using runtime_state monitoring to upload programs sequentially: (1) 3D printing with large toolpath splitting and (2) milling with automated rail repositioning.
 
+## Overview
+
+This repository contains Grasshopper workflows for **sequential UR program execution using RTDE feedback**. Rather than sending one large program, toolpaths are split into multiple URPs that are **automatically queued and run** using `runtime_state` monitoring. The **Robots plugin** handles upload, while a **C# RTDE client** streams live data to Grasshopper for cueing and visualization.
+
+Two example files are included:
+
+* **3D Printing** — split toolpaths for large-format extrusion
+* **Milling + Rail** — automated base shifting per program for multi-position milling
+
+The repository also provides the **RTDE variable index list** and the **C# client scripts** required for real-time feedback.
+
+### Plugins Required
+
+* **[Robots](https://www.food4rhino.com/en/app/robots)** _(by visose)_ — core plugin for generating UR programs and controlling robot motion.
+* **[Heteroptera](https://www.food4rhino.com/en/app/heteroptera)** _(by Amin Bahrami)_ — for data flow control and triggers.
+* **[Pufferfish](https://www.food4rhino.com/en/app/pufferfish)** _(by ekimroyrp)_ — miscellaneous components supporting workflow logic.
+
+> Ensure all plugins are installed before opening the example definitions.
+
+## Grasshopper Workflow
+
+Both workflows are built inside Grasshopper using the **Robots plugin**, with additional support from **Heteroptera** for data flow control and **Pufferfish** for general utilities.
+
+The Grasshopper setup establishes a **program cue loop** where multi-part robot jobs run in sequence without manual intervention. A long toolpath (for printing or milling) is first **split into multiple UR programs**, each representing one segment of the fabrication task. Splitting serves two purposes:
+
+1. Keeping each program under the controller buffer limit (*[≈2500 targets when uploaded remotely through Robots](https://github.com/visose/Robots/discussions/112), up to ~80,000 when loaded via USB/FTP*).
+
+2. Enabling the workaround for **7th-axis rail movement**, where the toolpath is divided whenever a rail repositioning is required so each segment stays in reach of the robot. As mentionned in the Robots repository's disucssion, [UR kinematic is not yet compatible with a 7th axis](https://github.com/visose/Robots/discussions/106#discussioncomment-1740335).
+
+```
+        Program Sequencer ⟶ Simulation
+                 ↑
+Toolpath ⟶ Split Programs ⟶ Trigger Queue ⟶ Remote Upload ⟶ **Run**
+                                     ↑
+                                    RTDE ⟶ Real-time Preview
+```
+
+Program execution works through two parallel systems:
+
+* **Robots Remote Interface** — *uploads and runs* each URP program
+* **RTDE Client (read-only)** — monitors robot status and detects when a program stops
+
+When `runtime_state = Stopped`: the **Heteroptera "Oil Can" component** fires the trigger that **queues and uploads the next UR program**, enabling continuous execution without operator input. A **Program Sequencer** branches out from the program list only for **preview/index visualization**, allowing simulation of the sequence before running it on the robot. Extracting the `actual_TCP_pose` from the RTDE client allows for real-time inverse kninematic calulation with the **Robots "Kinematics" component** which can then be visualized in the Rhino viewport.
+
+This makes it possible to toggle between **simulation and real execution using the same definition**.
+
+<details>
+<summary><strong>Click to expand the list of runtime_state values ↓</strong></summary>
+
+```
+0 = Stopping / Not Running
+1 = Stopped
+2 = Running / Playing
+3 = Pausing
+4 = Paused
+5 = Resuming
+
+```
+
+</details>
+
+This structure supports:
+
+* **large-scale 3D printing** using segmented toolpaths
+* **milling with rail repositioning**, where each segment recalculates the base to match the new rail position
+
+In both workflows, the cue mechanism remains identical — only the geometry logic changes.
+
+## Example 1 — Large Toolpath 3D Printing
+
+📂 Grasshopper file:
+`/Grasshopper/UR_Printing_Cue_Loop.gh`
+
+This example demonstrates splitting a long toolpath into smaller program chunks to avoid size limitations and improve reliability during large prints. Each segment is exported as a separate URP and executed in sequence using the cue loop described above.
+
+> 🔁 When program N finishes, `runtime_state` = Stopped → next program uploads automatically.
+
+Includes:
+
+* toolpath segmentation slider
+* program batching logic
+* optional simulation playback
+* remote control upload and monitoring
+
+**Screenshot:**
+*(Insert image or drag under this header)*
+
+## Example 2 — Milling with Rail Repositioning
+
+📂 Grasshopper file:
+`/Grasshopper/UR_VentionRail_Milling_Loop.gh`
+
+This workflow demonstrates milling with a rail that is **not configured as a 7th axis** in Robots. Instead, each target group is processed as a separate program, and the **rail base position is recalculated per program**. The base value is sent to the Vention rail controller via a custom URCap init command, effectively simulating multi-axis capability.
+
+> For each program:
+> target group → find closest rail position → update base → upload → run → cue next.
+
+Includes:
+
+* automatic rail repositioning based on target group centroid
+* independent URP programs per motion set
+* same cue structure as printing workflow
+* simulation + real execution toggle
+
+**Screenshot:**
+*(Insert image or drag under this header)*
+
 ## RTDE Client Script
 
 This repository includes a **Grasshopper C# RTDE client** used only to **read live feedback** from a Universal Robot — *not to upload or run programs*. Program sending is handled through the standard **Robots plugin remote interface**, while this client runs in parallel to monitor machine state.
 
 > **I am not the author of these scripts.**
-> I found them online some time ago and cannot relocate the original source.
+> I found them online some time ago and cannot relocate the original source (please let me know if you find the source).
 > I believe they were written by [**Visose**](https://github.com/visose), the creator of the Robots plugin.
 > I only updated them to work inside the newer Grasshopper C# environment
 
