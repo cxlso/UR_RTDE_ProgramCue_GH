@@ -22,28 +22,25 @@ The repository also provides the **RTDE variable index list** and the **C# clien
 
 ## Grasshopper Workflow
 
-Both workflows are built inside Grasshopper using the **Robots plugin**, with additional support from **Heteroptera** for data flow control and **Pufferfish** for general utilities.
-
 The Grasshopper setup establishes a **program cue loop** where multi-part robot jobs run in sequence without manual intervention. A long toolpath (for printing or milling) is first **split into multiple UR programs**, each representing one segment of the fabrication task. Splitting serves two purposes:
 
-1. Keeping each program under the controller buffer limit (*[≈2500 targets when uploaded remotely through Robots](https://github.com/visose/Robots/discussions/112), up to ~80,000 when loaded via USB/FTP*).
-
-2. Enabling the workaround for **7th-axis rail movement**, where the toolpath is divided whenever a rail repositioning is required so each segment stays in reach of the robot. As mentionned in the Robots repository's disucssion, [UR kinematic is not yet compatible with a 7th axis](https://github.com/visose/Robots/discussions/106#discussioncomment-1740335).
+1. Keeping each program under the controller buffer limit (*[≈2500 targets when uploaded remotely through Robots](https://github.com/visose/Robots/discussions/112), up to ~80,000 when loaded via USB/FTP*).  
+2. Enabling the workaround for **7th-axis rail movement**, where the toolpath is divided whenever a rail repositioning is required so each segment stays in reach of the robot. As mentioned in the Robots repository's discussion, [UR kinematics is not yet compatible with a 7th axis](https://github.com/visose/Robots/discussions/106#discussioncomment-1740335).
 
 ```
         Program Sequencer ⟶ Simulation
                  ↑
-Toolpath ⟶ Split Programs ⟶ Trigger Queue ⟶ Remote Upload ⟶ **Run**
+Toolpath ⟶ Split Programs ⟶ Trigger Queue ⟶ Remote Upload ⟶ RUN
                                      ↑
                                     RTDE ⟶ Real-time Preview
 ```
 
 Program execution works through two parallel systems:
 
-* **Robots Remote Interface** — *uploads and runs* each URP program
+* **Robots Remote Interface** — uploads and runs each URP program  
 * **RTDE Client (read-only)** — monitors robot status and detects when a program stops
 
-When `runtime_state = Stopped`: the **Heteroptera "Oil Can" component** fires the trigger that **queues and uploads the next UR program**, enabling continuous execution without operator input. A **Program Sequencer** branches out from the program list only for **preview/index visualization**, allowing simulation of the sequence before running it on the robot. Extracting the `actual_TCP_pose` from the RTDE client allows for real-time inverse kninematic calulation with the **Robots "Kinematics" component** which can then be visualized in the Rhino viewport.
+When `runtime_state = Stopped`, the **Heteroptera "Oil Can" component** fires the trigger that uploads the next UR program in the queue, enabling continuous execution without operator input. A **Program Sequencer** branches out from the program list only for **preview/index visualization**, allowing simulation of the sequence before running it on the robot. The `actual_TCP_pose` from the RTDE client can be fed into the Robots **Kinematics** component for real-time inverse kinematics calculation and visualization in Rhino.
 
 This makes it possible to toggle between **simulation and real execution using the same definition**.
 
