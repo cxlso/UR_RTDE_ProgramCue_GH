@@ -68,7 +68,7 @@ In both workflows, the cue mechanism remains identical — only the geometry log
 ## Example 1 — Large Toolpath 3D Printing
 
 📂 Grasshopper file:
-`/Grasshopper/UR_Printing_Cue_Loop.gh`
+[`UR_Printing_Cue_Loop.gh`](https://github.com/cxlso/UR_RTDE_ProgramCue_GH/raw/refs/heads/main/Grasshopper/UR_Printing_Cue_Loop.gh)
 
 This example demonstrates splitting a long toolpath into smaller program chunks to avoid size limitations and improve reliability during large prints. Each segment is exported as a separate URP and executed in sequence using the cue loop described above.
 
@@ -87,7 +87,7 @@ Includes:
 ## Example 2 — Milling with Rail Repositioning
 
 📂 Grasshopper file:
-`/Grasshopper/UR_VentionRail_Milling_Loop.gh`
+[`UR_Milling_Cue_Loop.gh`](https://github.com/cxlso/UR_RTDE_ProgramCue_GH/raw/refs/heads/main/Grasshopper/UR_Milling_Cue_Loop.gh)
 
 This workflow demonstrates milling with a rail that is **not configured as a 7th axis** in Robots. Instead, each target group is processed as a separate program, and the **rail base position is recalculated per program**. The base value is sent to the Vention rail controller via a custom URCap init command, effectively simulating multi-axis capability.
 
@@ -133,10 +133,10 @@ C:\Users\[USERNAME]\AppData\Roaming\McNeel\Rhinoceros\packages\8.0\Robots\1.9.0\
 
 ### Files Included
 
-📂 `CSharp/URTDE_Client.cs`
+📂 [`URRTDE_Client.cs`](CSharp/URRTDE_Client.cs)
 Reads RTDE outputs live and returns values + logs.
 
-📂 `CSharp/URTDE_Variables.cs`
+📂 [`URRTDE_Variables.cs`](CSharp/URRTDE_Variables.cs)
 Lists all available RTDE variable names from the Robots plugin.
 
 <details>
