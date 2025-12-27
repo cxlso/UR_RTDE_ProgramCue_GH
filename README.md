@@ -12,7 +12,7 @@ Two example files are included:
 
 The repository also provides the **RTDE variable index list** and the **C# client scripts** required for real-time feedback.
 
-### Plugins Required
+**Plugins required:**
 
 * **[Robots](https://www.food4rhino.com/en/app/robots)** _(by visose)_ — core plugin for generating UR programs and controlling robot motion.
 * **[Heteroptera](https://www.food4rhino.com/en/app/heteroptera)** _(by Amin Bahrami)_ — for data flow control and triggers.
@@ -54,7 +54,6 @@ This makes it possible to toggle between **simulation and real execution using t
 3 = Pausing
 4 = Paused
 5 = Resuming
-
 ```
 
 </details>
