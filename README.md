@@ -20,7 +20,7 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 ## Acknowledgements
 
 
-Project developped in collaboration with Sujay at [FIU RDFlab](https://rdflabfiu.github.io/labwiki/).
+Project developped in collaboration with Sujay at [FIU RDFlab](https://carta.fiu.edu/roboticslab/).
 
 
 <!-- Shields and link definitions -->
