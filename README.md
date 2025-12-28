@@ -1,6 +1,8 @@
 # UR RTDE Program Cue Loop in Grasshopper
 ###### RTDE-based UR program cue looping in Grasshopper with Robots plugin. Features 2 workflows using runtime_state monitoring to upload programs sequentially: (1) 3D printing with large toolpath splitting and (2) milling with automated rail repositioning.
 
+![Banner](Pictures/Banner.jpg)
+
 ## Overview
 
 This repository contains Grasshopper workflows for **sequential UR program execution using RTDE feedback**. Rather than sending one large program, toolpaths are split into multiple URPs that are **automatically queued and run** using `runtime_state` monitoring. The **Robots plugin** handles upload, while a **C# RTDE client** streams live data to Grasshopper for cueing and visualization.
