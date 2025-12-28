@@ -229,9 +229,7 @@ Lists all available RTDE variable names from the Robots plugin.
 
 </details>
 
-
 ## Photos & Videos
-
 
 <img src="https://github.com/cxlso/UR_RTDE_ProgramCue_GH/blob/main/Pictures/Milling.jpg" width="49.5%"></img> <img src="https://github.com/cxlso/UR_RTDE_ProgramCue_GH/blob/main/Pictures/Printing.jpg" width="49.5%">
 
@@ -252,9 +250,14 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 
 ## Acknowledgements
 
+This project was developed partially at the [School of Architecture of Florida Atlantic University](https://www.fau.edu/artsandletters/architecture/).
+My thanks go to [Luigi Pacheco](https://luigipacheco.com/), director of the [Interactive Machines Lab](https://www.instagram.com/imachineslab), for granting access to the robotic equipment and for supporting my work.
 
-Project developped in collaboration with Sujay at [FIU RDFlab](https://carta.fiu.edu/roboticslab/).
+I am also grateful to the [FIU RDFlab](https://carta.fiu.edu/roboticslab/) for providing access to their facilities. Collaboration with research assistant **Sujay Kumarji** helped shape several ideas during brainstorming sessions.
 
+Luigi Pacheco’s project **[Animaquina](https://github.com/luigipacheco/animaquina-UR)** shares similarities with the workflow presented here, and likely influenced parts of this research, even if indirectly.
+I would also like to acknowledge **[Robin Godwyll](https://github.com/robin-gdwl)** for his extensive documentation on Universal Robots integration with the *Robots* plugin — a resource I relied on often.
+And finally, special thanks to **[visose](https://github.com/visose)** for developing, maintaining and open-sourcing **[Robots](https://github.com/visose/Robots)** for Grasshopper, without which this workflow would not exist.
 
 <!-- Shields and link definitions -->
 
