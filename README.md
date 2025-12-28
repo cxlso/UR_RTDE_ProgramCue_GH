@@ -72,6 +72,8 @@ In both workflows, the cue mechanism remains identical — only the geometry log
 📂 Grasshopper file:
 [`UR_Printing_Cue_Loop.gh`](https://github.com/cxlso/UR_RTDE_ProgramCue_GH/raw/refs/heads/main/Grasshopper/UR_Printing_Cue_Loop.gh)
 
+[![UR_Printing_Cue_LoopLQ](Pictures/UR_Printing_Cue_LoopLQ.jpg)](Grasshopper/UR_Printing_Cue_Loop.jpg)
+
 This example demonstrates splitting a long toolpath into smaller program chunks to avoid size limitations and improve reliability during large prints. Each segment is exported as a separate URP and executed in sequence using the cue loop described above.
 
 > 🔁 When program N finishes, `runtime_state` = Stopped → next program uploads automatically.
@@ -83,13 +85,12 @@ Includes:
 * optional simulation playback
 * remote control upload and monitoring
 
-**Screenshot:**
-*(Insert image or drag under this header)*
-
 ## Example 2 — Milling with Rail Repositioning
 
 📂 Grasshopper file:
 [`UR_Milling_Cue_Loop.gh`](https://github.com/cxlso/UR_RTDE_ProgramCue_GH/raw/refs/heads/main/Grasshopper/UR_Milling_Cue_Loop.gh)
+
+[![UR_Milling_Cue_LoopLQ](Pictures/UR_Milling_Cue_LoopLQ.jpg)](Grasshopper/UR_Milling_Cue_Loop.jpg)
 
 This workflow demonstrates milling with a rail that is **not configured as a 7th axis** in Robots. Instead, each target group is processed as a separate program, and the **rail base position is recalculated per program**. The base value is sent to the Vention rail controller via a custom URCap init command, effectively simulating multi-axis capability.
 
@@ -102,9 +103,6 @@ Includes:
 * independent URP programs per motion set
 * same cue structure as printing workflow
 * simulation + real execution toggle
-
-**Screenshot:**
-*(Insert image or drag under this header)*
 
 ## RTDE Client Script
 
