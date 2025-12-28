@@ -255,8 +255,8 @@ My thanks go to [Luigi Pacheco](https://luigipacheco.com/), director of the [Int
 
 I am also grateful to the [FIU RDFlab](https://carta.fiu.edu/roboticslab/) for providing access to their facilities. Collaboration with research assistant **Sujay Kumarji** helped shape several ideas during brainstorming sessions.
 
-Luigi Pacheco’s project **[Animaquina](https://github.com/luigipacheco/animaquina-UR)** shares similarities with the workflow presented here, and likely influenced parts of this research, even if indirectly.
-I would also like to acknowledge **[Robin Godwyll](https://github.com/robin-gdwl)** for his extensive documentation on Universal Robots integration with the *Robots* plugin — a resource I relied on often.
+Luigi Pacheco’s project **[Animaquina](https://github.com/luigipacheco/animaquina-UR)** shares similarities with the workflow presented here, and likely influenced parts of this research, even if indirectly. I would also like to acknowledge **[Robin Godwyll](https://github.com/robin-gdwl)** for his extensive documentation on Universal Robots integration with the *Robots* plugin — a resource I relied on often.
+
 And finally, special thanks to **[visose](https://github.com/visose)** for developing, maintaining and open-sourcing **[Robots](https://github.com/visose/Robots)** for Grasshopper, without which this workflow would not exist.
 
 <!-- Shields and link definitions -->
