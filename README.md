@@ -232,6 +232,9 @@ Lists all available RTDE variable names from the Robots plugin.
 
 ## Photos & Videos
 
+
+<img src="https://github.com/cxlso/UR_RTDE_ProgramCue_GH/blob/main/Pictures/Milling.jpg" width="49.5%"></img> <img src="https://github.com/cxlso/UR_RTDE_ProgramCue_GH/blob/main/Pictures/Printing.jpg" width="49.5%">
+
 https://github.com/user-attachments/assets/fd91012d-67a6-480a-8aae-c6483b480235
 
 ## Contributing
