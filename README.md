@@ -30,8 +30,8 @@ The Grasshopper setup establishes a **program cue loop** where multi-part robot 
 2. Enabling the workaround for **7th-axis rail movement**, where the toolpath is divided whenever a rail repositioning is required so each segment stays in reach of the robot. As mentioned in the Robots repository's discussion, [UR kinematics is not yet compatible with a 7th axis](https://github.com/visose/Robots/discussions/106#discussioncomment-1740335).
 
 ```
-        Program Sequencer ⟶ Simulation
-                 ↑
+           Program Sequencer ⟶ Simulation
+                   ↑
 Toolpath ⟶ Split Programs ⟶ Trigger Queue ⟶ Remote Upload ⟶ RUN
                                      ↑
                                     RTDE ⟶ Real-time Preview
