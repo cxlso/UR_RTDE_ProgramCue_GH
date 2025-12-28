@@ -235,6 +235,8 @@ Lists all available RTDE variable names from the Robots plugin.
 
 https://github.com/user-attachments/assets/fd91012d-67a6-480a-8aae-c6483b480235
 
+https://github.com/user-attachments/assets/dbcb38aa-1163-48a1-b4a9-c499e90263a8
+
 ## Contributing
 
 Contributions and suggestions are welcome.
