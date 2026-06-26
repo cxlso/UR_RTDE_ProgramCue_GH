@@ -39,12 +39,20 @@ Toolpath ⟶ Split Programs ⟶ Trigger Queue ⟶ Remote Upload ⟶ RUN
 
 Program execution works through two parallel systems:
 
-* **Robots Remote Interface** — uploads and runs each URP program  
+* **Custom Robots Remote_Sequence component** — uploads and runs each Robots-generated UR program one after the other  
 * **RTDE Client (read-only)** — monitors robot status and detects when a program stops
 
-When `runtime_state = Stopped`, the **Heteroptera "Oil Can" component** fires the trigger that uploads the next UR program in the queue, enabling continuous execution without operator input. A **Program Sequencer** branches out from the program list only for **preview/index visualization**, allowing simulation of the sequence before running it on the robot. The `actual_TCP_pose` from the RTDE client can be fed into the Robots **Kinematics** component for real-time inverse kinematics calculation and visualization in Rhino.
+The **Remote_Sequence component** communicates with the Universal Robots controller through TCP/IP socket communication. The Robots-generated UR programs are sent to the controller through the UR **Secondary Interface** on port **30002**, while supervisory commands (such as `stop`, `running`, `robotmode`, `programState`, `close popup`, `unlock protective stop`) are sent through the UR **Dashboard Server** on port **29999**. Live robot feedback is handled separately by the **RTDE Client**, which reads values such as `runtime_state` and `actual_TCP_pose` through the UR **RTDE interface** on port **30004**. In this workflow, **Remote_Sequence** does not directly read RTDE data; instead, it receives `runtime_state` as a Grasshopper input and uses it to decide when to send the next program in the sequence.
 
-This makes it possible to toggle between **simulation and real execution using the same definition**.
+The original *Robots* **Remote component** was customized into a new **Remote_Sequence component**. This modified version adds a `runtime_state` input and allows a list of UR programs to be connected directly to the program input. When `runtime_state = Stopped`, the **Remote_Sequence component** automatically uploads and executes the next UR program in the queue. This process continues until there are no programs left to run, enabling continuous sequential execution without operator input.
+
+A **Program Sequencer** branches out from the program list only for **preview/index visualization**, allowing simulation of the sequence before running it on the robot. The `actual_TCP_pose` from the RTDE client can be fed into the Robots **Kinematics** component for real-time inverse kinematics calculation and visualization in Rhino.
+
+The new **Remote_Sequence component** also includes a **freedrive toggle**, making it possible to activate or deactivate freedrive directly from the Grasshopper interface.
+
+A second custom component, **Write AO**, works hand in hand with **Remote_Sequence** to manage analog outputs during pauses. **Write AO** is also RTDE-based and communicates with the robot through the UR **RTDE interface** on port **30004**. It listens to the current output state, stores the latest analog output values, and writes analog output commands back to the controller through RTDE. When the user toggles **Pause** on the remote component, **Write AO** stores the latest analog output values and temporarily sets the analog outputs to zero. When the user clicks **Resume**, **Write AO** restores the previously stored analog output values, allowing the system to continue with the same analog output state it had before pausing.
+
+This makes it possible to toggle between **simulation and real execution using the same definition**, while also adding safer pause/resume behavior for workflows that depend on analog output control.
 
 <details>
 <summary><strong>Click to expand the list of runtime_state values ↓</strong></summary>
